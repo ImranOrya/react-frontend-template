@@ -1,3 +1,5 @@
+"use client";
+
 import { Footprints, Waves } from "lucide-react";
 import { Bar, BarChart, XAxis } from "recharts";
 
@@ -14,6 +16,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+
+export const description = "A stacked bar chart with a legend";
+
 const chartData = [
   { date: "2024-07-15", running: 450, swimming: 300 },
   { date: "2024-07-16", running: 380, swimming: 420 },
@@ -26,21 +31,21 @@ const chartData = [
 const chartConfig = {
   running: {
     label: "Running",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
     icon: Footprints,
   },
   swimming: {
     label: "Swimming",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
     icon: Waves,
   },
 } satisfies ChartConfig;
 
-export default function TooltipChartEight() {
+export function ChartTooltipIcons() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Tooltip Eight</CardTitle>
+        <CardTitle>Tooltip - Icons</CardTitle>
         <CardDescription>Tooltip with icons.</CardDescription>
       </CardHeader>
       <CardContent>

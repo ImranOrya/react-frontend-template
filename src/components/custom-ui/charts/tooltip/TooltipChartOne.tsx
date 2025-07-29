@@ -1,3 +1,5 @@
+"use client";
+
 import { Bar, BarChart, XAxis } from "recharts";
 
 import {
@@ -13,6 +15,12 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+
+export const description = "A stacked bar chart with a legend";
+export const iframeHeight = "600px";
+export const containerClassName =
+  "[&>div]:w-full [&>div]:max-w-md flex items-center justify-center min-h-svh";
+
 const chartData = [
   { date: "2024-07-15", running: 450, swimming: 300 },
   { date: "2024-07-16", running: 380, swimming: 420 },
@@ -25,19 +33,19 @@ const chartData = [
 const chartConfig = {
   running: {
     label: "Running",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
   swimming: {
     label: "Swimming",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
 
-export default function TooltipChartOne() {
+export function ChartTooltipDefault() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Tooltip One</CardTitle>
+        <CardTitle>Tooltip - Default</CardTitle>
         <CardDescription>
           Default tooltip with ChartTooltipContent.
         </CardDescription>

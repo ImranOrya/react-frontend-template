@@ -1,4 +1,6 @@
-import { GitCommitVertical, TrendingUp } from "lucide-react";
+"use client";
+
+import { TrendingUp } from "lucide-react";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
 import {
@@ -15,6 +17,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+
+export const description = "A line chart with dots";
+
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
   { month: "February", desktop: 305, mobile: 200 },
@@ -27,19 +32,19 @@ const chartData = [
 const chartConfig = {
   desktop: {
     label: "Desktop",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
   mobile: {
     label: "Mobile",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
 
-export default function LineChartSix() {
+export function ChartLineDots() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Line Chart Six</CardTitle>
+        <CardTitle>Line Chart - Dots</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent>
@@ -69,29 +74,21 @@ export default function LineChartSix() {
               type="natural"
               stroke="var(--color-desktop)"
               strokeWidth={2}
-              dot={({ cx, cy, payload }) => {
-                const r = 24;
-                return (
-                  <GitCommitVertical
-                    key={payload.month}
-                    x={cx - r / 2}
-                    y={cy - r / 2}
-                    width={r}
-                    height={r}
-                    fill="hsl(var(--background))"
-                    stroke="var(--color-desktop)"
-                  />
-                );
+              dot={{
+                fill: "var(--color-desktop)",
+              }}
+              activeDot={{
+                r: 6,
               }}
             />
           </LineChart>
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
+        <div className="flex gap-2 leading-none font-medium">
           Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
         </div>
-        <div className="leading-none text-muted-foreground">
+        <div className="text-muted-foreground leading-none">
           Showing total visitors for the last 6 months
         </div>
       </CardFooter>

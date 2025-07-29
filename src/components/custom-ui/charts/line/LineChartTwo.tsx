@@ -1,3 +1,5 @@
+"use client";
+
 import { TrendingUp } from "lucide-react";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
@@ -15,6 +17,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+
+export const description = "A line chart";
+
 const chartData = [
   { month: "January", desktop: 186 },
   { month: "February", desktop: 305 },
@@ -27,15 +32,15 @@ const chartData = [
 const chartConfig = {
   desktop: {
     label: "Desktop",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
 } satisfies ChartConfig;
 
-export default function LineChartTwo() {
+export function ChartLineDefault() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Line Chart Two</CardTitle>
+        <CardTitle>Line Chart</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent>
@@ -62,7 +67,7 @@ export default function LineChartTwo() {
             />
             <Line
               dataKey="desktop"
-              type="linear"
+              type="natural"
               stroke="var(--color-desktop)"
               strokeWidth={2}
               dot={false}
@@ -71,10 +76,10 @@ export default function LineChartTwo() {
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
+        <div className="flex gap-2 leading-none font-medium">
           Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
         </div>
-        <div className="leading-none text-muted-foreground">
+        <div className="text-muted-foreground leading-none">
           Showing total visitors for the last 6 months
         </div>
       </CardFooter>

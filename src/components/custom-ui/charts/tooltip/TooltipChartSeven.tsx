@@ -1,3 +1,5 @@
+"use client";
+
 import { Bar, BarChart, XAxis } from "recharts";
 
 import {
@@ -13,6 +15,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+
+export const description = "A stacked bar chart with a legend";
+
 const chartData = [
   { date: "2024-07-15", running: 450, swimming: 300 },
   { date: "2024-07-16", running: 380, swimming: 420 },
@@ -25,19 +30,19 @@ const chartData = [
 const chartConfig = {
   running: {
     label: "Running",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
   swimming: {
     label: "Swimming",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
 
-export default function TooltipChartSeven() {
+export function ChartTooltipFormatter() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Tooltip Seven</CardTitle>
+        <CardTitle>Tooltip - Formatter</CardTitle>
         <CardDescription>Tooltip with custom formatter .</CardDescription>
       </CardHeader>
       <CardContent>
@@ -71,12 +76,12 @@ export default function TooltipChartSeven() {
                 <ChartTooltipContent
                   hideLabel
                   formatter={(value, name) => (
-                    <div className="flex min-w-[130px] items-center text-xs text-muted-foreground">
+                    <div className="text-muted-foreground flex min-w-[130px] items-center text-xs">
                       {chartConfig[name as keyof typeof chartConfig]?.label ||
                         name}
-                      <div className="ml-auto flex items-baseline gap-0.5 font-mono font-medium tabular-nums text-foreground">
+                      <div className="text-foreground ml-auto flex items-baseline gap-0.5 font-mono font-medium tabular-nums">
                         {value}
-                        <span className="font-normal text-muted-foreground">
+                        <span className="text-muted-foreground font-normal">
                           kcal
                         </span>
                       </div>

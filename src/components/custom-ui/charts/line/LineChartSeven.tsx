@@ -1,5 +1,7 @@
-import { TrendingUp } from "lucide-react";
-import { CartesianGrid, Dot, Line, LineChart } from "recharts";
+"use client";
+
+import { GitCommitVertical, TrendingUp } from "lucide-react";
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
 import {
   Card,
@@ -15,46 +17,34 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+
+export const description = "A line chart with custom dots";
+
 const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
-  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-  { browser: "other", visitors: 90, fill: "var(--color-other)" },
+  { month: "January", desktop: 186, mobile: 80 },
+  { month: "February", desktop: 305, mobile: 200 },
+  { month: "March", desktop: 237, mobile: 120 },
+  { month: "April", desktop: 73, mobile: 190 },
+  { month: "May", desktop: 209, mobile: 130 },
+  { month: "June", desktop: 214, mobile: 140 },
 ];
 
 const chartConfig = {
-  visitors: {
-    label: "Visitors",
-    color: "hsl(var(--chart-2))",
+  desktop: {
+    label: "Desktop",
+    color: "var(--chart-1)",
   },
-  chrome: {
-    label: "Chrome",
-    color: "hsl(var(--chart-1))",
-  },
-  safari: {
-    label: "Safari",
-    color: "hsl(var(--chart-2))",
-  },
-  firefox: {
-    label: "Firefox",
-    color: "hsl(var(--chart-3))",
-  },
-  edge: {
-    label: "Edge",
-    color: "hsl(var(--chart-4))",
-  },
-  other: {
-    label: "Other",
-    color: "hsl(var(--chart-5))",
+  mobile: {
+    label: "Mobile",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
 
-export default function LineChartSeven() {
+export function ChartLineDotsCustom() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Line Chart Seven</CardTitle>
+        <CardTitle>Line Chart - Custom Dots</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent>
@@ -63,36 +53,38 @@ export default function LineChartSeven() {
             accessibilityLayer
             data={chartData}
             margin={{
-              top: 24,
-              left: 24,
-              right: 24,
+              left: 12,
+              right: 12,
             }}
           >
             <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="month"
+              tickLine={false}
+              axisLine={false}
+              tickMargin={8}
+              tickFormatter={(value) => value.slice(0, 3)}
+            />
             <ChartTooltip
               cursor={false}
-              content={
-                <ChartTooltipContent
-                  indicator="line"
-                  nameKey="visitors"
-                  hideLabel
-                />
-              }
+              content={<ChartTooltipContent hideLabel />}
             />
             <Line
-              dataKey="visitors"
+              dataKey="desktop"
               type="natural"
-              stroke="var(--color-visitors)"
+              stroke="var(--color-desktop)"
               strokeWidth={2}
-              dot={({ payload, ...props }) => {
+              dot={({ cx, cy, payload }) => {
+                const r = 24;
                 return (
-                  <Dot
-                    key={payload.browser}
-                    r={5}
-                    cx={props.cx}
-                    cy={props.cy}
-                    fill={payload.fill}
-                    stroke={payload.fill}
+                  <GitCommitVertical
+                    key={payload.month}
+                    x={cx - r / 2}
+                    y={cy - r / 2}
+                    width={r}
+                    height={r}
+                    fill="hsl(var(--background))"
+                    stroke="var(--color-desktop)"
                   />
                 );
               }}
@@ -101,10 +93,10 @@ export default function LineChartSeven() {
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
+        <div className="flex gap-2 leading-none font-medium">
           Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
         </div>
-        <div className="leading-none text-muted-foreground">
+        <div className="text-muted-foreground leading-none">
           Showing total visitors for the last 6 months
         </div>
       </CardFooter>

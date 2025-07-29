@@ -1,3 +1,5 @@
+"use client";
+
 import { Bar, BarChart, XAxis } from "recharts";
 
 import {
@@ -13,6 +15,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+
+export const description = "A stacked bar chart with a legend";
+
 const chartData = [
   { date: "2024-07-15", running: 450, swimming: 300 },
   { date: "2024-07-16", running: 380, swimming: 420 },
@@ -25,19 +30,19 @@ const chartData = [
 const chartConfig = {
   running: {
     label: "Running",
-    color: "hsl(var(--chart-1))",
+    color: "var(--chart-1)",
   },
   swimming: {
     label: "Swimming",
-    color: "hsl(var(--chart-2))",
+    color: "var(--chart-2)",
   },
 } satisfies ChartConfig;
 
-export default function TooltipChartFive() {
+export function ChartTooltipLabelFormatter() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Tooltip Five</CardTitle>
+        <CardTitle>Tooltip - Label Formatter</CardTitle>
         <CardDescription>Tooltip with label formatter.</CardDescription>
       </CardHeader>
       <CardContent>

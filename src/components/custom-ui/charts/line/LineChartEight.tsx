@@ -1,5 +1,7 @@
+"use client";
+
 import { TrendingUp } from "lucide-react";
-import { CartesianGrid, LabelList, Line, LineChart, XAxis } from "recharts";
+import { CartesianGrid, Dot, Line, LineChart } from "recharts";
 
 import {
   Card,
@@ -15,31 +17,49 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+
+export const description = "A line chart with dots and colors";
+
 const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
+  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
+  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
+  { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
+  { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
+  { browser: "other", visitors: 90, fill: "var(--color-other)" },
 ];
 
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-1))",
+  visitors: {
+    label: "Visitors",
+    color: "var(--chart-2)",
   },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-2))",
+  chrome: {
+    label: "Chrome",
+    color: "var(--chart-1)",
+  },
+  safari: {
+    label: "Safari",
+    color: "var(--chart-2)",
+  },
+  firefox: {
+    label: "Firefox",
+    color: "var(--chart-3)",
+  },
+  edge: {
+    label: "Edge",
+    color: "var(--chart-4)",
+  },
+  other: {
+    label: "Other",
+    color: "var(--chart-5)",
   },
 } satisfies ChartConfig;
 
-export default function LineChartEight() {
+export function ChartLineDotsColors() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Line Chart Eight</CardTitle>
+        <CardTitle>Line Chart - Dots Colors</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent>
@@ -48,50 +68,48 @@ export default function LineChartEight() {
             accessibilityLayer
             data={chartData}
             margin={{
-              top: 20,
-              left: 12,
-              right: 12,
+              top: 24,
+              left: 24,
+              right: 24,
             }}
           >
             <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="month"
-              tickLine={false}
-              axisLine={false}
-              tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
-            />
             <ChartTooltip
               cursor={false}
-              content={<ChartTooltipContent indicator="line" />}
+              content={
+                <ChartTooltipContent
+                  indicator="line"
+                  nameKey="visitors"
+                  hideLabel
+                />
+              }
             />
             <Line
-              dataKey="desktop"
+              dataKey="visitors"
               type="natural"
-              stroke="var(--color-desktop)"
+              stroke="var(--color-visitors)"
               strokeWidth={2}
-              dot={{
-                fill: "var(--color-desktop)",
+              dot={({ payload, ...props }) => {
+                return (
+                  <Dot
+                    key={payload.browser}
+                    r={5}
+                    cx={props.cx}
+                    cy={props.cy}
+                    fill={payload.fill}
+                    stroke={payload.fill}
+                  />
+                );
               }}
-              activeDot={{
-                r: 6,
-              }}
-            >
-              <LabelList
-                position="top"
-                offset={12}
-                className="fill-foreground"
-                fontSize={12}
-              />
-            </Line>
+            />
           </LineChart>
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
+        <div className="flex gap-2 leading-none font-medium">
           Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
         </div>
-        <div className="leading-none text-muted-foreground">
+        <div className="text-muted-foreground leading-none">
           Showing total visitors for the last 6 months
         </div>
       </CardFooter>

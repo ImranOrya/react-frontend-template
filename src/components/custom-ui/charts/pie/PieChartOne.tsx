@@ -1,3 +1,5 @@
+"use client";
+
 import { TrendingUp } from "lucide-react";
 import { Pie, PieChart } from "recharts";
 
@@ -52,7 +54,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function PieChartOne() {
+export function ChartPieSimple() {
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
